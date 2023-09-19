@@ -17,8 +17,8 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const client = await db.connect();
   try {
+    const client = await db.connect();
     const { body } = req;
 
     await client.query("BEGIN");

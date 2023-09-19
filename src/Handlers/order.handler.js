@@ -64,8 +64,8 @@ const getOrderDetail = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-  const client = await db.connect();
   try {
+    const client = await db.connect();
     const { params, body } = req;
 
     await client.query("BEGIN");
@@ -106,8 +106,8 @@ const updateOrder = async (req, res) => {
 };
 
 const updateOrderDetail = async (req, res) => {
-  const client = await db.connect();
   try {
+    const client = await db.connect();
     const { params, body } = req;
 
     await client.query("BEGIN");
