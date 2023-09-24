@@ -9,4 +9,4 @@ NodeJs + Express.
 Since Im still learning.
 
 Pull requests are welcome. Please open an issue first
-to discuss what would tou like to change.
+to discuss what would you like to change.
