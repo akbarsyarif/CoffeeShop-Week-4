@@ -38,35 +38,62 @@ const postOrder = (client, params, body) => {
 };
 
 const postOrderProduct = (client, orderId, body) => {
-  let sql = "insert into order_products (order_id, products_id, quantity, sizes_id, ice, sub_total) values ($1, $2, $3, $4, $5, $6), ";
-  const values = [orderId, body.products_id, body.quantity, body.sizes_id, body.ice, body.sub_total];
-  // 5
-  if (Object.keys(body).length > 8) {
-    let i = 0;
-    for (const [key, value] of Object.entries(body)) {
-      if (i >= 8) {
-        if (i % 5 === 3) {
-          sql += `($1, $${i - 1}, `;
-        } else if (i % 5 === 4 || i % 5 === 0 || i % 5 === 1) {
-          sql += `$${i - 1}, `;
-        } else if (i % 5 === 2) {
-          sql += `$${i - 1}), `;
-        }
-        values.push(value);
+  let sql = "insert into order_products (order_id, products_id, quantity, sizes_id, ice, sub_total) values ";
+  const values = [orderId];
+  const bodyValue = Object.values(body);
+
+  let k = 2;
+  for (let i = 3; i < bodyValue.length; i++) {
+    for (let j = 0; j < bodyValue[i].length; j++) {
+      if (j === 0) {
+        sql += `($1, $${k}, `;
       }
-      i++;
+      if (j > 0 && j < bodyValue[i].length - 1) {
+        sql += `$${k}, `;
+      }
+      if (j === bodyValue[i].length - 1) {
+        sql += `$${k}), `;
+      }
+      values.push(bodyValue[i][j]);
+      k++;
     }
   }
   sql = sql.slice(0, -2);
 
   sql += ` returning order_id, sub_total`;
-  // console.log(sql);
-  // console.log(Object.entries(body));
-  // console.log(Object.keys(body).length);
-  // console.log(values);
 
   return client.query(sql, values);
 };
+// const postOrderProduct = (client, orderId, body) => {
+//   let sql = "insert into order_products (order_id, products_id, quantity, sizes_id, ice, sub_total) values ($1, $2, $3, $4, $5, $6), ";
+//   const values = [orderId, body.products_id, body.quantity, body.sizes_id, body.ice, body.sub_total];
+//   // 5
+//   if (Object.keys(body).length > 8) {
+//     let i = 0;
+//     for (const [key, value] of Object.entries(body)) {
+//       if (i >= 8) {
+//         if (i % 5 === 3) {
+//           sql += `($1, $${i - 1}, `;
+//         } else if (i % 5 === 4 || i % 5 === 0 || i % 5 === 1) {
+//           sql += `$${i - 1}, `;
+//         } else if (i % 5 === 2) {
+//           sql += `$${i - 1}), `;
+//         }
+//         values.push(value);
+//       }
+//       i++;
+//     }
+//   }
+//   sql = sql.slice(0, -2);
+
+//   sql += ` returning order_id, sub_total`;
+//   console.log(sql);
+//   console.log(Object.entries(body));
+//   console.log(Object.keys(body).length);
+//   console.log(values);
+
+//   return client.query(sql, values);
+// };
 
 const patchOrder = (params, body) => {
   let sql = 'update "order"  set ';
@@ -83,7 +110,6 @@ const patchOrder = (params, body) => {
 
   return db.query(sql, values);
 };
-// shipping_id = 3, updated_at =now() where id = 1; "
 
 const patchOrderDetail = (client, params, body) => {
   let sql = `update order_products set `;

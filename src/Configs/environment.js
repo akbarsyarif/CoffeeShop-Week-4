@@ -3,4 +3,13 @@ module.exports = {
   dbName: process.env.DB_NAME,
   dbUser: process.env.DB_USER,
   dbPass: process.env.DB_PWD,
+  jwtSecret: process.env.JWT_KEY,
+  jwtIssuer: process.env.JWT_ISSUER,
+  adminKey: process.env.ADMIN_KEY,
+  mService: process.env.MAIL_SERVICE,
+  authType: process.env.MAIL_AUTH_TYPE,
+  mUser: process.env.MAIL_USER,
+  gClientId: process.env.GOOGLE_ID,
+  gClientSecret: process.env.GOOGLE_SECRET,
+  refreshToken: process.env.REFRESH_TOKEN,
 };
