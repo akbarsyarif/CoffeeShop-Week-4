@@ -1,3 +1,4 @@
+const multer = require("multer");
 const productModel = require("../Models/product.model");
 
 const getProduct = async (req, res) => {

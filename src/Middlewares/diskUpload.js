@@ -17,10 +17,13 @@ const diskUpload = multer({
     fileSize: 2e6,
   },
   fileFilter: (req, file, cb) => {
-    const pattern = /jpg|png|jpeg/i;
+    const pattern = /jpg|png/i;
     const ext = path.extname(file.originalname);
 
-    if (!pattern.test(ext)) return cb(null, false);
+    if (!pattern.test(ext)) {
+      return cb(null, false);
+    }
+
     cb(null, true);
   },
 });

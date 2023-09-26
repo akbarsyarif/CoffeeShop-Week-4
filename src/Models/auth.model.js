@@ -21,8 +21,24 @@ const getPassword = (body) => {
   return db.query(sql, values);
 };
 
+const insertBlackToken = (token) => {
+  let sql = "insert into blacklist (blacklist_token) values ($1)";
+  const values = [token];
+
+  return db.query(sql, values);
+};
+
+// const deleteWhiteToken = (token) => {
+//   let sql = "delete from whitelist where whitelist_token like $1";
+//   const values = [token];
+
+//   return db.query(sql, values);
+// };
+
 module.exports = {
   postUser,
   postUserDetail,
   getPassword,
+  insertBlackToken,
+  // deleteWhiteToken,
 };

@@ -20,9 +20,9 @@ const postUserDetail = (client, user_id) => {
   return client.query(sql, values);
 };
 
-const patchUser = (body, params) => {
+const patchUser = (body, user_id) => {
   let sql = "update users set pwd = $1, updated_at = now() where id = $2;";
-  const values = [body.new_password, params.id];
+  const values = [body.new_password, user_id];
 
   return db.query(sql, values);
 };

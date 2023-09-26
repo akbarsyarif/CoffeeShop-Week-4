@@ -80,13 +80,13 @@ const login = async (req, res) => {
       user_role_id,
     };
     const jwtOptions = {
-      expiresIn: "2h",
+      expiresIn: "1d",
       issuer: jwtIssuer,
     };
 
-    jwt.sign(payload, jwtSecret, jwtOptions, (err, token) => {
+    const jwtToken = jwt.sign(payload, jwtSecret, jwtOptions, (err, token) => {
       if (err) throw err;
-      console.log(payload.user_role_id);
+      // console.log(payload.user_role_id);
       res.status(200).json({
         msg: "Log In Success",
         token,
@@ -100,7 +100,26 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    const bearerToken = req.header("Authorization");
+    const token = bearerToken.split(" ")[1];
+
+    await authModel.insertBlackToken(token);
+
+    res.status(200).json({
+      msg: "Logout Success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
 };

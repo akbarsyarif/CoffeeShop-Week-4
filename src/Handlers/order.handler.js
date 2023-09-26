@@ -66,10 +66,10 @@ const getOrderDetail = async (req, res) => {
 const createOrder = async (req, res) => {
   const client = await db.connect();
   try {
-    const { params, body } = req;
+    const { userInfo, body } = req;
 
     await client.query("BEGIN");
-    const data = await orderModel.postOrder(client, params, body);
+    const data = await orderModel.postOrder(client, userInfo.id, body);
     const result = await orderModel.postOrderProduct(client, data.rows[0].id, body);
     await client.query("COMMIT");
 

@@ -1,5 +1,6 @@
 const userModel = require("../Models/user.model");
 const db = require("../Configs/postgre");
+// const check = require("../Helpers/checkRole");
 
 const getUser = async (req, res) => {
   try {
@@ -43,8 +44,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { body, params } = req;
-    const result = await userModel.patchUser(body, params);
+    const { body, userInfo } = req;
+    const result = await userModel.patchUser(body, userInfo.id);
 
     res.status(200).json({
       msg: "Succesfully changed Password",

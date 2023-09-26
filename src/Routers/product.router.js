@@ -7,8 +7,8 @@ const diskMiddleware = require("../Middlewares/diskUpload");
 const productRouter = express.Router();
 
 productRouter.get("/", productHandler.getProduct);
-productRouter.post("/", authMiddleware.isLogin, authMiddleware.isRole, diskMiddleware.singleUpload("product-image"), productHandler.createProduct);
-productRouter.patch("/:id", authMiddleware.isLogin, authMiddleware.isRole, diskMiddleware.singleUpload("product-image"), productHandler.updateProduct);
+productRouter.post("/", authMiddleware.isLogin, diskMiddleware.singleUpload("product-image"), productHandler.createProduct);
+productRouter.patch("/:id", authMiddleware.isLogin, diskMiddleware.singleUpload("product-image"), productHandler.updateProduct);
 productRouter.delete("/:id", productHandler.deleteProduct);
 
 module.exports = productRouter;

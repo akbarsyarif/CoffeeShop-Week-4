@@ -5,9 +5,9 @@ const authMiddleware = require("../Middlewares/authorization");
 
 const userRouter = express.Router();
 
-userRouter.get("/", authMiddleware.isLogin, authMiddleware.isRole, userHandler.getUser);
+userRouter.get("/", authMiddleware.isLogin, authMiddleware.isAdmin, userHandler.getUser);
 userRouter.post("/", userHandler.createUser);
-userRouter.patch("/:id", userHandler.updateUser);
-userRouter.delete("/:id", userHandler.deleteUser);
+userRouter.patch("/:id", authMiddleware.isLogin, userHandler.updateUser);
+userRouter.delete("/:id", authMiddleware.isLogin, userHandler.deleteUser);
 
 module.exports = userRouter;

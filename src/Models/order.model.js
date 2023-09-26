@@ -30,9 +30,9 @@ const getOrderDetail = (params) => {
   return db.query(sql, values);
 };
 
-const postOrder = (client, params, body) => {
+const postOrder = (client, user_id, body) => {
   let sql = 'insert into "order" (users_id, status_id, total, shipping_id) values ($1, $2, $3, $4) returning id';
-  const values = [params.user_id, body.status_id, body.total, body.shipping_id];
+  const values = [user_id, body.status_id, body.total, body.shipping_id];
 
   return client.query(sql, values);
 };
