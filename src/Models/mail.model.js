@@ -15,7 +15,7 @@ const postOtp = (otp, userId) => {
 };
 
 const getOtp = (userId) => {
-  let sql = "select otp from users where id = $1";
+  let sql = "select otp from users where id = $1 and otp is not null";
   const values = [userId];
 
   return db.query(sql, values);
