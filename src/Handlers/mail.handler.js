@@ -6,6 +6,10 @@ const sendMail = async (req, res) => {
     // const { id } = req.userInfo;
     const userId = req.userInfo.id;
     const result = await mailModel.getEmail(userId);
+    let otp = Math.floor(Math.random() * 10000 + 1);
+    if (otp < 1000) {
+      otp += 999;
+    }
 
     const info = await send.sendMail({
       to: result.rows[0].email,
@@ -13,13 +17,10 @@ const sendMail = async (req, res) => {
       data: {
         fullName: result.rows[0].full_name,
         activationLink: "http://localhost:8000/mail",
+        otp,
       },
     });
 
-    let otp = Math.floor(Math.random() * 10000 + 1);
-    if (otp < 1000) {
-      otp += 999;
-    }
     await mailModel.postOtp(otp, userId);
 
     res.status(200).json({
