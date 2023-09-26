@@ -12,7 +12,7 @@ const sendMail = async (req, res) => {
       subject: "Activation Link",
       data: {
         fullName: result.rows[0].full_name,
-        activationLink: "https://www.fazztrack.com/",
+        activationLink: "http://localhost:8000/mail",
       },
     });
 

@@ -5,6 +5,6 @@ const { isLogin } = require("../Middlewares/authorization");
 
 authRouter.post("/", authHandler.register);
 authRouter.post("/login", authHandler.login);
-authRouter.post("/logout", isLogin, authHandler.logout);
+authRouter.delete("/", isLogin, authHandler.logout);
 
 module.exports = authRouter;
