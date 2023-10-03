@@ -55,6 +55,12 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { body } = req;
+
+    if (!req.file)
+      return res.status(400).json({
+        msg: "You Must Insert Product Image",
+      });
+
     const fileLink = `/public/images/${req.file.filename}`;
 
     const result = await productModel.postProduct(body, fileLink);

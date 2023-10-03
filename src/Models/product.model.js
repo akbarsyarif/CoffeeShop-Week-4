@@ -50,7 +50,7 @@ const getProduct = (query) => {
     sql = sql.slice(0, -2);
   }
 
-  sql += `limit $1 offset $2`;
+  sql += ` limit $1 offset $2`;
   console.log(sql);
   console.log(values);
   console.log(Object.entries(query));

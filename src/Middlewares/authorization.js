@@ -71,4 +71,21 @@ module.exports = {
   isLogin,
   isAdmin,
   isUser,
+  isRole: (roleId) =>
+    (checkRole = (req, res, next) => {
+      const { user_role_id } = req.userInfo;
+      if (user_role_id !== roleId) {
+        if (user_role_id === 1) {
+          return res.status(404).json({
+            msg: "Data Not Found",
+          });
+        }
+        if (user_role_id === 2) {
+          return res.status(401).json({
+            msg: "Please Use Your User Account",
+          });
+        }
+      }
+      next();
+    }),
 };

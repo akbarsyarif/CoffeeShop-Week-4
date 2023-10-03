@@ -36,6 +36,7 @@ const sendMail = async (req, res) => {
   }
 };
 
+// ganti route ke get
 const verifyOtp = async (req, res) => {
   try {
     const { body, userInfo } = req;
