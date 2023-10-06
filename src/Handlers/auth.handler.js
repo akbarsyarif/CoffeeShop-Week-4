@@ -2,8 +2,7 @@ const authModel = require("../Models/auth.model");
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 const db = require("../Configs/postgre");
-const { jwtSecret, jwtIssuer } = require("../Configs/environment");
-const { consumers } = require("nodemailer/lib/xoauth2");
+const { jwtSecret, jwtIssuer, refreshSecret } = require("../Configs/environment");
 
 // 1. menerima body register dari client
 // 2. hash password
@@ -80,17 +79,21 @@ const login = async (req, res) => {
       user_role_id,
     };
     const jwtOptions = {
-      expiresIn: "1d",
+      expiresIn: "15m",
       issuer: jwtIssuer,
     };
 
-    const jwtToken = jwt.sign(payload, jwtSecret, jwtOptions, (err, token) => {
-      if (err) throw err;
-      // console.log(payload.user_role_id);
-      res.status(200).json({
-        msg: "Log In Success",
-        token,
-      });
+    const jwtToken = jwt.sign(payload, jwtSecret, jwtOptions);
+
+    const refreshToken = jwt.sign(payload, refreshSecret, { expiresIn: "7d", issuer: jwtIssuer });
+
+    res.cookie("jwt", refreshToken, {
+      secure: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({
+      msg: "Log In Success",
+      token: jwtToken,
     });
   } catch (error) {
     console.log(error);

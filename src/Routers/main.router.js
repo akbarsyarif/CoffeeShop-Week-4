@@ -7,6 +7,7 @@ const promoRouter = require("./promo.router");
 const orderRouter = require("./order.router");
 const authRouter = require("./auth.router");
 const mailRouter = require("./mail.router");
+const refreshRouter = require("./refresh.router");
 // const { sendMail } = require("../Helpers/sendMail");
 
 mainRouter.use("/user", userRouter);
@@ -15,6 +16,7 @@ mainRouter.use("/promo", promoRouter);
 mainRouter.use("/order", orderRouter);
 mainRouter.use("/auth", authRouter);
 mainRouter.use("/mail", mailRouter);
+mainRouter.use("/refresh", refreshRouter);
 // mainRouter.use("/mail")
 
 // mainRouter.get("/mail", async (req, res) => {

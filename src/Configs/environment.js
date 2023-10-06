@@ -4,6 +4,7 @@ module.exports = {
   dbUser: process.env.DB_USER,
   dbPass: process.env.DB_PWD,
   jwtSecret: process.env.JWT_KEY,
+  refreshSecret: process.env.JWT_REFRESH,
   jwtIssuer: process.env.JWT_ISSUER,
   adminKey: process.env.ADMIN_KEY,
   mService: process.env.MAIL_SERVICE,
@@ -12,4 +13,7 @@ module.exports = {
   gClientId: process.env.GOOGLE_ID,
   gClientSecret: process.env.GOOGLE_SECRET,
   refreshToken: process.env.REFRESH_TOKEN,
+  cloudinaryName: process.env.CLOUDINARY_NAME,
+  cloudinaryKey: process.env.CLOUDINARY_KEY,
+  cloudinarySecret: process.env.CLOUDINARY_SECRET,
 };

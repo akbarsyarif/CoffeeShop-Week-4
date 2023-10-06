@@ -50,28 +50,27 @@ const diskUpload = multer({
 // };
 
 module.exports = {
-  singleUpload: (fieldName) =>
-    (checkError = (req, res, next) => {
-      diskUpload.single(fieldName)(req, res, (err) => {
-        if (err instanceof multer.MulterError) {
+  singleUpload: (fieldName) => (req, res, next) => {
+    diskUpload.single(fieldName)(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({
+          msg: err.message,
+        });
+      }
+      if (err) {
+        if (err.message === "Only .jpg, .jpeg, and .png files are allowed") {
           return res.status(400).json({
             msg: err.message,
           });
         }
-        if (err) {
-          if (err.message === "Only .jpg, .jpeg, and .png files are allowed") {
-            return res.status(400).json({
-              msg: err.message,
-            });
-          }
-          return res.status(500).json({
-            status: "Internal Server Error",
-            msg: err.message,
-          });
-        }
-        next();
-      });
-    }),
+        return res.status(500).json({
+          status: "Internal Server Error",
+          msg: err.message,
+        });
+      }
+      next();
+    });
+  },
 
   multiUpload: (fieldName, maxCount = 1) => diskUpload.array(fieldName, maxCount),
   // singleUpload: (fieldName) => diskUpload.single(fieldName),
